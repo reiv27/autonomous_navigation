@@ -17,18 +17,24 @@ def logit(p: np.ndarray):
 def sigmoid(x: np.ndarray):
     return 1.0 / (1.0 + np.exp(-x))
 
-c = np.arange(0, map_len + res, res, dtype=float)  # cell coordinates (cm)
+c = np.arange(0, map_len, res, dtype=float)  # cell coordinates (cm)
+l = np.zeros(c.shape[0], dtype=float)
+
+near = np.arange(0, map_len, res, dtype=float)
+far  = near + res
+centers = near + res * 0.5
+
 l = np.zeros(c.shape[0], dtype=float)
 
 for z in measurements:
-    d = c - robot_pos
-    p_m = np.full(d.shape[0], 0.5, dtype=float)
+    p_m = np.full(c.shape[0], 0.5, dtype=float)
 
-    p_m[d < z] = p_free
+    # p_m[c < z] = p_free
+    p_m[far <= z] = p_free
 
     start = z
     end = z + extra
-    mask_hit = (d >= start) & (d <= end)
+    mask_hit = (c >= start) & (c <= end)
     p_m[mask_hit] = p_occ
 
     l += logit(p_m)
