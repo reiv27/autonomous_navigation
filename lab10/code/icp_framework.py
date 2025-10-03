@@ -12,32 +12,18 @@ from misc_tools import *
 
 
 def closest_point_matching(x, p):
-    p_matched = np.zeros_like(p)
-    used_indices = set()  # Track which points in p have been used
-
-    # For each point in x, find the closest unused point in p
-    for i in range(x.shape[1]):
-        min_distance = float('inf')
-        best_match_idx = -1
-        
-        # Find closest unused point in p
-        for j in range(p.shape[1]):
-            if j in used_indices:
-                continue
-                
-            distance = np.linalg.norm(x[:, i] - p[:, j])
-            
-            if distance < min_distance:
-                min_distance = distance
-                best_match_idx = j
-        
-        # Assign the closest point if found
-        if best_match_idx != -1:
-            p_matched[:, i] = p[:, best_match_idx]
-            used_indices.add(best_match_idx)
-        else:
-            # If no unused points left, keep original point
-            p_matched[:, i] = x[:, i]
+    p_matched = np.zeros(p.shape)
+    x_used = np.zeros(x.shape[1], dtype=bool)
+    for i in range(p.shape[1]):
+        dist = np.inf
+        idx = -1
+        for j in range(x.shape[1]):
+            new_dist = np.linalg.norm(p[:, i] - x[:, j])
+            if new_dist < dist and not x_used[j]:
+                dist = new_dist
+                idx = j
+        p_matched[:, idx] = p[:, i]
+        x_used[idx] = True
     
     return p_matched
 
