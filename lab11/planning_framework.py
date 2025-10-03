@@ -73,9 +73,9 @@ def get_heuristic(cell, goal):
   
   heuristic = 0
  
-  # dx = float(goal[0] - cell[0])
-  # dy = float(goal[1] - cell[1])
-  # heuristic = np.linalg.norm(np.array([dx, dy]))
+  dx = float(goal[0] - cell[0])
+  dy = float(goal[1] - cell[1])
+  heuristic = np.linalg.norm(np.array([dx, dy]))
 
   return heuristic
 

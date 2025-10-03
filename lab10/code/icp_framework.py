@@ -70,8 +70,8 @@ def main():
 
     # icp(x, p1, False)
     # icp(x, p2, False)
-    icp(x, p3, True)
-    # icp(x, p4, True)
+    # icp(x, p3, True)
+    icp(x, p4, True)
 
     plt.waitforbuttonpress()
 

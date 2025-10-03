@@ -18,7 +18,6 @@ def sigmoid(x: np.ndarray):
     return 1.0 / (1.0 + np.exp(-x))
 
 c = np.arange(0, map_len, res, dtype=float)  # cell coordinates (cm)
-l = np.zeros(c.shape[0], dtype=float)
 
 near = np.arange(0, map_len, res, dtype=float)
 far  = near + res
